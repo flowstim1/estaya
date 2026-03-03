@@ -48,94 +48,6 @@ export default function SavedPropertiesPage() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  // Mock rental properties
-  const mockRentals: Property[] = [
-    {
-      _id: 'r1',
-      title: 'Luxury Apartment in Corniche',
-      price: 25000,
-      location: 'Corniche, Casablanca',
-      type: 'apartment',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 150,
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      rating: 4.7,
-      reviews: 18,
-      purpose: 'rent'
-    },
-    {
-      _id: 'r2',
-      title: 'Modern Villa with Pool',
-      price: 45000,
-      location: 'Anfa, Casablanca',
-      type: 'villa',
-      bedrooms: 4,
-      bathrooms: 3,
-      area: 350,
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80',
-      rating: 4.9,
-      reviews: 24,
-      purpose: 'rent'
-    },
-    {
-      _id: 'r3',
-      title: 'Traditional Riad Experience',
-      price: 18000,
-      location: 'Medina, Marrakech',
-      type: 'house',
-      bedrooms: 3,
-      bathrooms: 3,
-      area: 200,
-      image: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      rating: 4.8,
-      reviews: 32,
-      purpose: 'rent'
-    },
-    {
-      _id: 'r4',
-      title: 'Beachfront Apartment',
-      price: 35000,
-      location: 'Saidia Beach, Saidia',
-      type: 'apartment',
-      bedrooms: 2,
-      bathrooms: 2,
-      area: 120,
-      image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      rating: 4.6,
-      reviews: 15,
-      purpose: 'rent'
-    },
-    {
-      _id: 'r5',
-      title: 'Luxury Penthouse',
-      price: 55000,
-      location: 'Marina, Casablanca',
-      type: 'apartment',
-      bedrooms: 3,
-      bathrooms: 3,
-      area: 220,
-      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2053&q=80',
-      rating: 5.0,
-      reviews: 12,
-      purpose: 'rent'
-    },
-    {
-      _id: 'r6',
-      title: 'Mountain View House',
-      price: 22000,
-      location: 'Ourika, Marrakech',
-      type: 'house',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 180,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      rating: 4.7,
-      reviews: 14,
-      purpose: 'rent'
-    }
-  ];
-
   // Fetch all properties and load favorites
   useEffect(() => {
     const loadData = async () => {
@@ -153,7 +65,7 @@ export default function SavedPropertiesPage() {
         }
         
         // Combine real and mock properties
-        const allProps = [...realProps, ...mockRentals];
+        const allProps = [...realProps];
         setAllProperties(allProps);
         
         // Load favorites from localStorage

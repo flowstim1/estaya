@@ -113,9 +113,6 @@ export default function ProfilePage() {
 
       // Fetch property details for saved IDs (in real app, this would be an API call)
       if (favIds.length > 0) {
-        // For demo, we'll filter from mock data
-        const mockSaved = mockProperties.filter(p => favIds.includes(p._id));
-        setSavedProperties(mockSaved);
       }
     } catch (error) {
       console.error('Error loading saved properties:', error);
@@ -133,38 +130,6 @@ export default function ProfilePage() {
       console.error('Error loading listings:', error);
     }
   };
-
-  // Mock properties for saved items (only used if user has saved properties)
-  const mockProperties: Property[] = [
-    {
-      _id: '1',
-      title: 'Luxury Villa with Pool in Palmeraie',
-      price: 12500000,
-      location: 'Palmeraie, Marrakech',
-      type: 'villa',
-      bedrooms: 5,
-      bathrooms: 6,
-      area: 650,
-      image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80',
-      rating: 4.8,
-      reviews: 24,
-      purpose: 'sale'
-    },
-    {
-      _id: '2',
-      title: 'Modern Apartment with Ocean View',
-      price: 3500000,
-      location: 'Corniche, Casablanca',
-      type: 'apartment',
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 180,
-      image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-      rating: 4.6,
-      reviews: 18,
-      purpose: 'sale'
-    }
-  ];
 
   const handleLogout = () => {
     localStorage.removeItem('token');
