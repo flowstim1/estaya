@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-soft-white via-white to-sand-beige/20 text-dark-charcoal font-inter antialiased;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair font-bold tracking-tight;
+  }
+
+  h1 {
+    @apply text-5xl md:text-6xl lg:text-7xl;
+  }
+
+  h2 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  /* Luxury Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-sand-beige/20;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-emerald-green/30 rounded-full hover:bg-gold/50 transition-colors;
+  }
+}
+
+@layer components {
+  /* Premium Glass Card */
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-md border border-gold/10 shadow-xl hover:shadow-2xl transition-all duration-500 rounded-2xl;
+  }
+
+  /* Luxury Card */
+  .luxury-card {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-sand-beige/20;
+  }
+
+  /* Moroccan Pattern Background */
+  .moroccan-pattern {
+    background-image: repeating-linear-gradient(45deg, #0F3D3E 0px, #0F3D3E 2px, transparent 2px, transparent 10px);
+  }
+
+  .moroccan-pattern-light {
+    background-image: repeating-linear-gradient(45deg, #C6A75E 0px, #C6A75E 1px, transparent 1px, transparent 8px);
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl;
+  }
+
+  .hover-gold {
+    @apply transition-colors duration-300 hover:text-gold;
+  }
+
+  /* Gradients */
+  .gold-gradient {
+    @apply bg-gradient-to-r from-gold/80 to-gold;
+  }
+
+  .emerald-gradient {
+    @apply bg-gradient-to-r from-emerald-green to-emerald-green/80;
+  }
+
+  .luxury-gradient {
+    @apply bg-gradient-to-br from-emerald-green via-emerald-green/90 to-gold/80;
+  }
+
+  /* Badges */
+  .badge-premium {
+    @apply absolute top-4 left-4 z-10 bg-gradient-to-r from-gold to-emerald-green text-white px-4 py-2 rounded-full text-sm font-medium tracking-wide shadow-lg;
+  }
+
+  .badge-featured {
+    @apply absolute top-4 right-4 z-10 bg-emerald-green text-white px-4 py-2 rounded-full text-sm font-medium tracking-wide shadow-lg;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-emerald-green text-white px-6 py-3 rounded-xl hover:bg-gold hover:text-dark-charcoal transition-all duration-300 font-medium tracking-wide shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply border-2 border-emerald-green text-emerald-green px-6 py-3 rounded-xl hover:bg-emerald-green hover:text-white transition-all duration-300 font-medium tracking-wide;
+  }
+
+  .btn-gold {
+    @apply bg-gold text-dark-charcoal px-6 py-3 rounded-xl hover:bg-emerald-green hover:text-white transition-all duration-300 font-medium tracking-wide shadow-lg;
+  }
+
+  /* Inputs */
+  .input-luxury {
+    @apply w-full px-4 py-3 bg-white/90 border border-gold/20 rounded-xl focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300;
+  }
+
+  /* Section Titles */
+  .section-title {
+    @apply font-playfair text-4xl md:text-5xl text-emerald-green mb-4 relative inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    @apply absolute -bottom-2 left-0 w-24 h-1 bg-gradient-to-r from-gold to-emerald-green rounded-full;
+  }
+
+  .section-title-center {
+    @apply font-playfair text-4xl md:text-5xl text-emerald-green mb-4 relative inline-block text-center;
+  }
+
+  .section-title-center::after {
+    content: '';
+    @apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-gold to-emerald-green rounded-full;
+  }
+
+  /* Dividers */
+  .divider-luxury {
+    @apply w-24 h-1 bg-gradient-to-r from-gold to-emerald-green mx-auto my-8 rounded-full;
+  }
+
+  /* Property Card */
+  .property-card {
+    @apply bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-sand-beige/20;
+  }
+
+  .property-card-image {
+    @apply relative h-56 overflow-hidden;
+  }
+
+  .property-card-image img {
+    @apply transition-transform duration-1000 hover:scale-110;
+  }
+
+  /* Stats Card */
+  .stat-card {
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 border border-gold/10 hover:border-gold/30 transition-all;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(198, 167, 94, 0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Enable selection for form elements */
+input, textarea, select, button, [contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.copyable-content, [data-copyable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
