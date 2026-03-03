@@ -74,15 +74,15 @@ useEffect(() => {
       const data = await response.json();
 
       if (data.success) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.data));
-        window.dispatchEvent(new Event('userUpdate'));
-        setSuccess('Login successful! Redirecting...');
-        setTimeout(() => {
-          router.push('/');
-          router.refresh();
-        }, 1500);
-      } else {
+  localStorage.setItem('token', data.token);
+  localStorage.setItem('user', JSON.stringify(data.data));
+  window.dispatchEvent(new Event('userUpdate'));
+  setSuccess('Login successful! Redirecting...');
+  
+  // Force immediate redirect
+  router.push('/');
+  router.refresh();
+} else {
         setError(data.error || 'Invalid credentials');
       }
     } catch (err) {
