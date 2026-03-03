@@ -25,138 +25,6 @@ import ProtectedAction from '@/components/ProtectedAction';
 import { isGuest, getGuestViewProperties, shouldShowUpgradeBanner, GUEST_LIMITS } from '@/lib/guestLimits';
 import UpgradeBanner from '@/components/UpgradeBanner';
 
-// Mock rental properties for fallback
-const mockRentalProperties: Property[] = [
-  {
-    _id: 'r1',
-    title: 'Luxury Apartment in Corniche',
-    description: 'Stunning apartment with direct ocean view, fully furnished with high-end finishes. Includes pool access and 24/7 security.',
-    price: 25000,
-    location: 'Corniche, Casablanca',
-    type: 'apartment',
-    bedrooms: 3,
-    bathrooms: 2,
-    area: 150,
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    rating: 4.7,
-    reviews: 18,
-    featured: true,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r2',
-    title: 'Modern Villa with Pool',
-    description: 'Beautiful villa in quiet neighborhood with private pool, garden, and terrace. Perfect for families.',
-    price: 45000,
-    location: 'Anfa, Casablanca',
-    type: 'villa',
-    bedrooms: 4,
-    bathrooms: 3,
-    area: 350,
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80',
-    rating: 4.9,
-    reviews: 24,
-    featured: true,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r3',
-    title: 'Traditional Riad Experience',
-    description: 'Authentic Moroccan riad in the heart of Medina, beautifully restored with modern comforts. Rooftop terrace with city views.',
-    price: 18000,
-    location: 'Medina, Marrakech',
-    type: 'house',
-    bedrooms: 3,
-    bathrooms: 3,
-    area: 200,
-    image: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    rating: 4.8,
-    reviews: 32,
-    featured: false,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r4',
-    title: 'Beachfront Apartment',
-    description: 'Direct access to the beach, spectacular views, and modern amenities. Includes parking and pool.',
-    price: 35000,
-    location: 'Saidia Beach, Saidia',
-    type: 'apartment',
-    bedrooms: 2,
-    bathrooms: 2,
-    area: 120,
-    image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    rating: 4.6,
-    reviews: 15,
-    featured: true,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r5',
-    title: 'Commercial Space in Downtown',
-    description: 'Prime commercial location perfect for restaurant or retail. High foot traffic area.',
-    price: 40000,
-    location: 'Downtown, Casablanca',
-    type: 'commercial',
-    bedrooms: 0,
-    bathrooms: 2,
-    area: 180,
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80',
-    rating: 4.5,
-    reviews: 8,
-    featured: false,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r6',
-    title: 'Luxury Penthouse',
-    description: 'Top floor penthouse with panoramic city views, private terrace, and premium finishes.',
-    price: 55000,
-    location: 'Marina, Casablanca',
-    type: 'apartment',
-    bedrooms: 3,
-    bathrooms: 3,
-    area: 220,
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2053&q=80',
-    rating: 5.0,
-    reviews: 12,
-    featured: true,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r7',
-    title: 'Mountain View House',
-    description: 'Peaceful house with stunning mountain views, large garden, and fireplace.',
-    price: 22000,
-    location: 'Ourika, Marrakech',
-    type: 'house',
-    bedrooms: 3,
-    bathrooms: 2,
-    area: 180,
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    rating: 4.7,
-    reviews: 14,
-    featured: false,
-    purpose: 'rent'
-  },
-  {
-    _id: 'r8',
-    title: 'Café/Restaurant Space',
-    description: 'Fully equipped café/restaurant space in busy area. Ready to operate with existing license.',
-    price: 30000,
-    location: 'Gauthier, Casablanca',
-    type: 'commercial',
-    bedrooms: 0,
-    bathrooms: 2,
-    area: 150,
-    image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=2047&q=80',
-    rating: 4.4,
-    reviews: 6,
-    featured: true,
-    purpose: 'rent'
-  }
-];
-
 // Custom hook for favorites
 function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -205,7 +73,7 @@ export default function RentPage() {
   
   const { toggleFavorite, isFavorited } = useFavorites();
 
-  // Fetch properties from API with mock fallback
+  // Fetch properties from API
   useEffect(() => {
     fetchProperties();
   }, []);
@@ -215,15 +83,14 @@ export default function RentPage() {
       setLoading(true);
       const result = await getProperties({ purpose: 'rent' });
       
-      if (result.success && result.data && result.data.length > 0) {
+      if (result.success && result.data) {
         setProperties(result.data);
       } else {
-        console.log('Using mock rental data as fallback');
-        setProperties(mockRentalProperties);
+        setProperties([]); // Empty array when no properties
       }
     } catch (err) {
       console.error('Error fetching properties:', err);
-      setProperties(mockRentalProperties);
+      setProperties([]); // Set to empty array on error
     } finally {
       setLoading(false);
     }
@@ -713,13 +580,13 @@ export default function RentPage() {
           ) : (
             <div className="bg-white/90 rounded-3xl p-16 text-center border border-gold/20">
               <h3 className="font-playfair text-2xl text-dark-charcoal mb-2">No Rentals Found</h3>
-              <p className="text-dark-charcoal/60 mb-6">Try adjusting your filters</p>
-              <button
-                onClick={clearFilters}
-                className="bg-gradient-to-r from-emerald-green to-gold text-white px-8 py-3 rounded-xl"
+              <p className="text-dark-charcoal/60 mb-6">Be the first to list a rental property!</p>
+              <Link
+                href="/sell"
+                className="inline-block bg-gradient-to-r from-emerald-green to-gold text-white px-8 py-3 rounded-xl hover:shadow-lg transition-all"
               >
-                Clear Filters
-              </button>
+                List Your Property
+              </Link>
             </div>
           )}
 
