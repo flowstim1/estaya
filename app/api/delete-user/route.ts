@@ -4,22 +4,34 @@ import User from '@/lib/models/User';
  
 export async function POST(request: Request) { 
   try { 
-    const { email } = await request.json(); 
+    const body = await request.json(); 
+    const { email } = body; 
  
     if (!email) { 
-      return NextResponse.json({ error: 'Email required' }, { status: 400 }); 
+      return NextResponse.json({ success: false, error: 'Email required' }, { status: 400 }); 
     } 
  
     await connectToDatabase(); 
  
     const result = await User.deleteOne({ email }); 
  
+    if (result.deletedCount === 0) { 
+      return NextResponse.json({ 
+        success: false, 
+        error: 'User not found' 
+      }, { status: 404 }); 
+    } 
+ 
     return NextResponse.json({ 
       success: true, 
-      deleted: result.deletedCount 
-      message: result.deletedCount  ? 'User deleted' : 'User not found' 
+      message: 'User deleted successfully' 
     }); 
+ 
   } catch (error) { 
-    return NextResponse.json({ error: String(error) }, { status: 500 }); 
+    console.error('Delete error:', error); 
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Failed to delete user' 
+    }, { status: 500 }); 
   } 
 } 
