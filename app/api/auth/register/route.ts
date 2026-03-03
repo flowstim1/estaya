@@ -12,7 +12,6 @@ export async function POST(request: Request) {
     const { name, email, password } = body; 
  
     // Validate input 
-    if (!name || !email || !password) { 
       return NextResponse.json( 
         { success: false, error: 'Name, email and password are required' }, 
         { status: 400 } 
