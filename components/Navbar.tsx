@@ -346,63 +346,102 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Navigation */}
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="lg:hidden overflow-hidden"
-              >
-                <div className="pt-4 pb-2 space-y-1">
-                  {navLinks.map((link) => {
-                    const Icon = link.icon;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
-                      >
-                        <Icon className="text-gold text-lg" />
-                        <span>{link.label}</span>
-                      </Link>
-                    );
-                  })}
-                  
-                  {/* Mobile Currency & Language */}
-                  <div className="flex items-center gap-2 px-4 py-3">
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value as 'MAD' | 'EUR' | 'USD')}
-                      className="flex-1 px-3 py-2 bg-white border border-gold/20 rounded-xl text-sm"
-                    >
-                      {currencies.map((curr) => (
-                        <option key={curr.code} value={curr.code}>
-                          {curr.flag} {curr.code} ({curr.symbol})
-                        </option>
-                      ))}
-                    </select>
-                    
-                    <LanguageSwitcher mobile />
-                  </div>
+{/* Mobile Navigation */}
+<AnimatePresence>
+  {isOpen && (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="lg:hidden overflow-hidden"
+    >
+      <div className="pt-4 pb-2 space-y-1">
+        {navLinks.map((link) => {
+          const Icon = link.icon;
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
+            >
+              <Icon className="text-gold text-lg" />
+              <span>{link.label}</span>
+            </Link>
+          );
+        })}
 
-                  {!user && (
-                    <Link
-                      href={`/${locale}/login`}
-                      onClick={() => setIsOpen(false)}
-                      className="block text-center px-4 py-3 bg-emerald-green text-white rounded-xl mx-4"
-                    >
-                      {t('nav.signIn')}
-                    </Link>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+        {/* Mobile Currency & Language */}
+        <div className="flex items-center gap-2 px-4 py-3">
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value as 'MAD' | 'EUR' | 'USD')}
+            className="flex-1 px-3 py-2 bg-white border border-gold/20 rounded-xl text-sm"
+          >
+            {currencies.map((curr) => (
+              <option key={curr.code} value={curr.code}>
+                {curr.flag} {curr.code} ({curr.symbol})
+              </option>
+            ))}
+          </select>
+
+          <LanguageSwitcher mobile />
         </div>
+
+        {/* FIXED: Show profile options when logged in */}
+        {user ? (
+          <>
+            {/* User Profile Link */}
+            <Link
+              href={`/${locale}/profile`}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors border-t border-gold/10"
+            >
+              <FiUser className="text-gold text-lg" />
+              <div>
+                <span className="font-medium">{t('nav.profile')}</span>
+                <p className="text-xs text-dark-charcoal/60 truncate">{user.email}</p>
+              </div>
+            </Link>
+
+            {/* Saved Properties Link */}
+            <Link
+              href={`/${locale}/profile/saved`}
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
+            >
+              <FiHeart className="text-gold text-lg" />
+              <span>{t('nav.saved')}</span>
+            </Link>
+
+            {/* Logout Button */}
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsOpen(false);
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors border-t border-gold/10"
+            >
+              <FiLogOut className="text-lg" />
+              <span>{t('nav.signOut')}</span>
+            </button>
+          </>
+        ) : (
+          /* Show Sign In when NOT logged in */
+          <Link
+            href={`/${locale}/login`}
+            onClick={() => setIsOpen(false)}
+            className="block text-center px-4 py-3 bg-emerald-green text-white rounded-xl mx-4"
+          >
+            {t('nav.signIn')}
+          </Link>
+        )}
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>      
+    </div>
       </motion.nav>
     </>
   );
