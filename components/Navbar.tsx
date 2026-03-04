@@ -12,8 +12,6 @@ import {
   FiHeart, 
   FiMenu, 
   FiX,
-  FiChevronDown,
-  FiGlobe,
   FiDollarSign,
   FiStar
 } from 'react-icons/fi';
@@ -30,7 +28,7 @@ interface User {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { currency, setCurrency } = useCurrency(); // REMOVED the duplicate currency state
+  const { currency, setCurrency } = useCurrency();
 
   const router = useRouter();
   const params = useParams();
@@ -115,19 +113,12 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            {/* Logo - Full ESTAYA */}
-            <Link 
-              href={`/${locale}`} 
-              className="group relative"
-            >
-              <span className={`font-playfair text-2xl md:text-3xl font-bold transition-all duration-300 ${
-                isScrolled ? 'text-emerald-green' : 'text-white'
-              }`}>
-                ESTAYA
-              </span>
-            </Link>
+            <Link href={`/${locale}`} className="group relative">
+<span className="font-playfair text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#F5E6D3] to-[#E4C9A7] bg-clip-text text-transparent drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)] tracking-wide">
+  ESTAYA
+</span>
+  </Link>
 
-            {/* Desktop Navigation - Icons Only */}
             <div className="hidden lg:flex items-center space-x-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;
@@ -155,7 +146,6 @@ export default function Navbar() {
                       <Icon className="text-lg" />
                     </Link>
                     
-                    {/* Tooltip on hover */}
                     {hoveredItem === link.href && (
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
@@ -170,9 +160,7 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Right Section - Small Icons */}
             <div className="hidden lg:flex items-center space-x-1">
-              {/* Currency Selector - Small Icon */}
               <div className="relative">
                 <button
                   onClick={() => setShowCurrency(!showCurrency)}
@@ -187,7 +175,6 @@ export default function Navbar() {
                   <span className="text-sm">{currencies.find(c => c.code === currency)?.flag}</span>
                 </button>
 
-                {/* Currency tooltip */}
                 {hoveredItem === 'currency' && (
                   <motion.div
                     initial={{ opacity: 0, y: 5 }}
@@ -198,7 +185,6 @@ export default function Navbar() {
                   </motion.div>
                 )}
 
-                {/* Currency Dropdown */}
                 <AnimatePresence>
                   {showCurrency && (
                     <motion.div
@@ -228,10 +214,8 @@ export default function Navbar() {
                 </AnimatePresence>
               </div>
 
-              {/* Language Switcher - Small Icon */}
               <LanguageSwitcher isScrolled={isScrolled} />
 
-              {/* User Menu - Profile Circle */}
               <div className="relative">
                 {user ? (
                   <>
@@ -250,7 +234,6 @@ export default function Navbar() {
                       </span>
                     </button>
 
-                    {/* Profile tooltip */}
                     {hoveredItem === 'profile' && (
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
@@ -261,7 +244,6 @@ export default function Navbar() {
                       </motion.div>
                     )}
 
-                    {/* Dropdown Menu */}
                     <AnimatePresence>
                       {showDropdown && (
                         <motion.div
@@ -318,7 +300,6 @@ export default function Navbar() {
                       <FiUser className="text-lg" />
                     </Link>
 
-                    {/* Login tooltip */}
                     {hoveredItem === 'login' && (
                       <motion.div
                         initial={{ opacity: 0, y: 5 }}
@@ -333,7 +314,6 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`lg:hidden w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
@@ -346,102 +326,168 @@ export default function Navbar() {
             </button>
           </div>
 
-{/* Mobile Navigation */}
-<AnimatePresence>
-  {isOpen && (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3 }}
-      className="lg:hidden overflow-hidden"
-    >
-      <div className="pt-4 pb-2 space-y-1">
-        {navLinks.map((link) => {
-          const Icon = link.icon;
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
-            >
-              <Icon className="text-gold text-lg" />
-              <span>{link.label}</span>
-            </Link>
-          );
-        })}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="lg:hidden overflow-y-auto max-h-[80vh] bg-white shadow-xl rounded-b-2xl mt-2 border-t border-gold/10"
+              >
+                <div className="pt-4 pb-6 px-2">
+                  {/* SECTION 1 - MAIN NAVIGATION */}
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gold uppercase tracking-wider px-4 mb-2">Navigation</p>
+                    {navLinks.slice(0, 4).map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-4 px-4 py-4 rounded-xl text-dark-charcoal hover:bg-gradient-to-r hover:from-gold/10 hover:to-emerald-green/10 active:bg-gold/20 transition-all duration-200"
+                        >
+                          <Icon className="text-gold text-xl w-6" />
+                          <span className="font-medium text-base">{link.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
 
-        {/* Mobile Currency & Language */}
-        <div className="flex items-center gap-2 px-4 py-3">
-          <select
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value as 'MAD' | 'EUR' | 'USD')}
-            className="flex-1 px-3 py-2 bg-white border border-gold/20 rounded-xl text-sm"
-          >
-            {currencies.map((curr) => (
-              <option key={curr.code} value={curr.code}>
-                {curr.flag} {curr.code} ({curr.symbol})
-              </option>
-            ))}
-          </select>
+                  {/* DIVIDER */}
+                  <div className="border-t border-gold/10 my-4 mx-4"></div>
 
-          <LanguageSwitcher mobile />
+                  {/* SECTION 2 - COMPANY */}
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold text-gold uppercase tracking-wider px-4 mb-2">Company</p>
+                    {navLinks.slice(4, 6).map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-4 px-4 py-4 rounded-xl text-dark-charcoal hover:bg-gradient-to-r hover:from-gold/10 hover:to-emerald-green/10 active:bg-gold/20 transition-all duration-200"
+                        >
+                          <Icon className="text-gold text-xl w-6" />
+                          <span className="font-medium text-base">{link.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  {/* DIVIDER */}
+                  <div className="border-t border-gold/10 my-4 mx-4"></div>
+
+                  {/* SECTION 3 - PREFERENCES */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-semibold text-gold uppercase tracking-wider px-4 mb-2">Preferences</p>
+                    <div className="flex items-center gap-2 px-4">
+                      {/* Currency Selector */}
+                      <select
+                        value={currency}
+                        onChange={(e) => setCurrency(e.target.value as 'MAD' | 'EUR' | 'USD')}
+                        className="flex-1 px-4 py-3 bg-sand-beige/10 border border-gold/20 rounded-xl text-sm text-dark-charcoal focus:outline-none focus:border-gold"
+                      >
+                        {currencies.map((curr) => (
+                          <option key={curr.code} value={curr.code}>
+                            {curr.flag} {curr.code}
+                          </option>
+                        ))}
+                      </select>
+
+                      {/* Language Icons - FR/EN */}
+                      <div className="flex gap-1">
+                        <Link
+                          href="/fr"
+                          onClick={() => setIsOpen(false)}
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center text-sm font-medium transition-all duration-200 ${
+                            locale === 'fr' 
+                              ? 'bg-gradient-to-r from-emerald-green to-gold text-white' 
+                              : 'bg-sand-beige/10 text-dark-charcoal/70 hover:bg-gold/10 border border-gold/20'
+                          }`}
+                        >
+                          FR
+                        </Link>
+                        <Link
+                          href="/en"
+                          onClick={() => setIsOpen(false)}
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center text-sm font-medium transition-all duration-200 ${
+                            locale === 'en' 
+                              ? 'bg-gradient-to-r from-emerald-green to-gold text-white' 
+                              : 'bg-sand-beige/10 text-dark-charcoal/70 hover:bg-gold/10 border border-gold/20'
+                          }`}
+                        >
+                          EN
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* DIVIDER */}
+                  <div className="border-t border-gold/10 my-4 mx-4"></div>
+
+                  {/* SECTION 4 - ACCOUNT */}
+                  {user ? (
+                    <div className="space-y-1">
+                      <p className="text-xs font-semibold text-gold uppercase tracking-wider px-4 mb-2">Account</p>
+                      
+                      {/* Profile Card */}
+                      <Link
+                        href={`/${locale}/profile`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-4 px-4 py-4 rounded-xl bg-gradient-to-r from-gold/5 to-emerald-green/5 border border-gold/10 mb-2"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-green to-gold flex items-center justify-center text-white font-bold">
+                          {user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-dark-charcoal">{user.name}</p>
+                          <p className="text-xs text-dark-charcoal/60 truncate">{user.email}</p>
+                        </div>
+                      </Link>
+
+                      {/* Saved Properties */}
+                      <Link
+                        href={`/${locale}/profile/saved`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-4 px-4 py-4 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
+                      >
+                        <FiHeart className="text-gold text-xl w-6" />
+                        <span className="text-base">{t('nav.saved')}</span>
+                      </Link>
+
+                      {/* Sign Out */}
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsOpen(false);
+                        }}
+                        className="w-full flex items-center gap-4 px-4 py-4 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
+                      >
+                        <FiLogOut className="text-xl w-6" />
+                        <span className="text-base font-medium">{t('nav.signOut')}</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <p className="text-xs font-semibold text-gold uppercase tracking-wider px-4 mb-2">Account</p>
+                      <Link
+                        href={`/${locale}/login`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center justify-center gap-2 mx-4 px-4 py-4 bg-gradient-to-r from-emerald-green to-gold text-white rounded-xl font-medium"
+                      >
+                        <FiUser className="text-lg" />
+                        <span>{t('nav.signIn')}</span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-
-        {/* FIXED: Show profile options when logged in */}
-        {user ? (
-          <>
-            {/* User Profile Link */}
-            <Link
-              href={`/${locale}/profile`}
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors border-t border-gold/10"
-            >
-              <FiUser className="text-gold text-lg" />
-              <div>
-                <span className="font-medium">{t('nav.profile')}</span>
-                <p className="text-xs text-dark-charcoal/60 truncate">{user.email}</p>
-              </div>
-            </Link>
-
-            {/* Saved Properties Link */}
-            <Link
-              href={`/${locale}/profile/saved`}
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-dark-charcoal hover:bg-sand-beige/20 transition-colors"
-            >
-              <FiHeart className="text-gold text-lg" />
-              <span>{t('nav.saved')}</span>
-            </Link>
-
-            {/* Logout Button */}
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsOpen(false);
-              }}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors border-t border-gold/10"
-            >
-              <FiLogOut className="text-lg" />
-              <span>{t('nav.signOut')}</span>
-            </button>
-          </>
-        ) : (
-          /* Show Sign In when NOT logged in */
-          <Link
-            href={`/${locale}/login`}
-            onClick={() => setIsOpen(false)}
-            className="block text-center px-4 py-3 bg-emerald-green text-white rounded-xl mx-4"
-          >
-            {t('nav.signIn')}
-          </Link>
-        )}
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>      
-    </div>
       </motion.nav>
     </>
   );

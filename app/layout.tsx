@@ -18,6 +18,17 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: 'ESTAYA - Luxury Real Estate Morocco',
   description: 'Discover exceptional properties in Morocco',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icon-16.png', type: 'image/png', sizes: '16x16' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180' },
+    ],
+    shortcut: ['/favicon.ico'],
+  },
 };
 
 export default function RootLayout({
